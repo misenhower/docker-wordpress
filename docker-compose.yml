@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  nginx:
+    image: nginx
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./www:/var/www/html
+    links:
+      - wordpress
+    restart: always
+
+  wordpress:
+    image: wordpress:php7.1-fpm
+    volumes:
+      - ./www:/var/www/html
+    links:
+      - mysql
+    environment:
+      WORDPRESS_DB_PASSWORD: secret
+    restart: always
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ./storage/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    restart: always
+
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   links:
+  #     - mysql:db
+  #   ports:
+  #     - "8889:80"

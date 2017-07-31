@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  nginx:
+    ports:
+      - '127.0.0.1:9000:80'
+
+  wordpress:
+    environment:
+      WORDPRESS_DB_PASSWORD: secret
+
+  mysql:
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
