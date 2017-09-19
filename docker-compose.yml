@@ -28,10 +28,3 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: secret
     restart: always
-
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   links:
-  #     - mysql:db
-  #   ports:
-  #     - "8889:80"

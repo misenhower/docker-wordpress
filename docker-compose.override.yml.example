@@ -12,3 +12,10 @@ services:
   mysql:
     environment:
       MYSQL_ROOT_PASSWORD: secret
+
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   links:
+  #     - mysql:db
+  #   ports:
+  #     - "8889:80"
