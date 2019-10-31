@@ -1,21 +1,29 @@
-version: '2'
+version: '3.7'
 
 services:
   nginx:
     ports:
       - '127.0.0.1:9000:80'
+    restart: unless-stopped
 
   wordpress:
     environment:
       WORDPRESS_DB_PASSWORD: secret
+    restart: unless-stopped
 
   mysql:
     environment:
       MYSQL_ROOT_PASSWORD: secret
+    restart: unless-stopped
 
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   links:
-  #     - mysql:db
-  #   ports:
-  #     - "127.0.0.1:9001:80"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - mysql
+    ports:
+      - "127.0.0.1:9001:80"
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: secret
