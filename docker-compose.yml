@@ -10,14 +10,17 @@ services:
       - wordpress
 
   wordpress:
-    image: wordpress:php7.3-fpm
+    image: wordpress:php7.4-fpm
     volumes:
       - ./www:/var/www/html
       - ./php/config.ini:/usr/local/etc/php/conf.d/config.ini:ro
     depends_on:
       - mysql
     environment:
-      WORDPRESS_DB_PASSWORD: secret
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_NAME: ${DB_DATABASE:-wordpress}
+      WORDPRESS_DB_USER: ${DB_USERNAME:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-secret}
 
   mysql:
     image: mysql:8.0
@@ -25,7 +28,10 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: ${DB_DATABASE:-wordpress}
+      MYSQL_USER: ${DB_USERNAME:-wordpress}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-supersecret}
 
 volumes:
   mysql_data:
